@@ -86,6 +86,7 @@ class SortingRobot:
         Turn off the robot's light
         """
         self._light = "OFF"
+
     def light_is_on(self):
         """
         Returns True if the robot's light is on and False otherwise.
@@ -96,9 +97,49 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        # robot is not finished while light is still off
+        # pass thru items, moving left to right and if and item is larger than the current swap it with the one to the right
+        # pass through items, moving right to left, if an item is smaller it should be swapped with number to its left
+        # robot light should turn on when there are no more items left to sort
 
+        
+        while self.light_is_on() == False:
+                #robot starts empty with nothing
+                self.set_light_on()
+                #if the sort has not reached the end of the list then..
+                while self.can_move_right():
+                    self.swap_item()
+                    self.move_right()
+
+                    #if current item held is larger swap
+                    if self.compare_item() == 1:
+                        self.swap_item()
+                        self.set_light_off()
+
+                    # push item to the next spot
+                     self.move_left()
+                    self.swap_item()
+                    self.move_right()
+
+                if self.light_is_on():
+                    break
+
+                self.set_light_on()
+
+                #while the sort is not at the begining of the list
+                while self.can_move_left():
+                    self.swap_item()
+                    self.move_left()
+
+                    #if held item is smaller
+                    if self.compare_item() == -1:
+                        self.swap_item()
+                        self.set_light_off()
+
+                    #push item to the next spot
+                    self.move_right()
+                    self.swap_item()
+                    self.move_left()
 
 if __name__ == "__main__":
     # Test our your implementation from the command line
